@@ -15,9 +15,10 @@ def wsgi_to_bytes(s):
 
 def run_with_cgi(application):
     """
-    服务端收到HTTP请求后，调用application（这个例子中，就是run_simple)。
-    application调用start_response方法，设置headers_set
-    write(data)调用write方法，设置头部信息headers_sent，写入响应body
+    1. 服务端收到HTTP请求后，生成environ字典，传递给可调用的application
+   （这个例子中，就是run_simpl:e)。
+    2. start_response生成响应头。还要作为参数传递给application
+    write(data)调用write方法，写入响应body
     """
 
     # os.environ    获取操作系统定义的环境变量
@@ -39,7 +40,6 @@ def run_with_cgi(application):
 
     def write(data):
         out = sys.stdout.buffer
-
         if not headers_set:
             raise AssertionError('write() before start_response()')
 
