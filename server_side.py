@@ -3,10 +3,12 @@ import os, sys
 # surrogateescape 是一种可逆的错误处理机制，利用 Surrogate 码位保存无法解码的字节，编码时则将其还原为对应的原始字节。
 enc, esc = sys.getfilesystemencoding(), 'surrogateescape'
 
+
 def unicode_to_wsgi(u):
     # Convert an environment variable to a WSGI "bytes-as-unicode" string
     # iso-8859-1就是latin-1
     return u.encode(enc, esc).decode('iso-8859-1')
+
 
 def wsgi_to_bytes(s):
     # 处理头部信息，转化为native string
@@ -22,7 +24,7 @@ def run_with_cgi(application):
     """
 
     # os.environ    获取操作系统定义的环境变量
-    environ = {k:unicode_to_wsgi(v) for k,v in os.environ.items()}
+    environ = {k: unicode_to_wsgi(v) for k, v in os.environ.items()}
     environ['wsgi.input'] = sys.stdin.buffer    # sys.stdin 用于交互式输入
     environ['wsgi.errors'] = sys.stderr         # sys.stderr 用于错误信息
     environ['wsgi.version'] = (1, 0)
@@ -68,11 +70,13 @@ def run_with_cgi(application):
         # Note: error checking on the headers should happen here
 
         return write
-
+    print('1')
     result = application(environ, start_response)
-
+    print(result)
+    print('2')
     try:
         for data in result:
+            print('3')
             if data:
                 write(data)     # don't send headers until body appears
         if not headers_sent:
@@ -80,6 +84,7 @@ def run_with_cgi(application):
     finally:
         if hasattr(result, 'close'):
             result.close()
+
 
 if __name__ == '__main__':
     from app_side import simple_app
