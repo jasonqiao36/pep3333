@@ -1,4 +1,5 @@
-import os, sys
+import os
+import sys
 
 # surrogateescape 是一种可逆的错误处理机制，利用 Surrogate 码位保存无法解码的字节，编码时则将其还原为对应的原始字节。
 enc, esc = sys.getfilesystemencoding(), 'surrogateescape'
@@ -18,7 +19,7 @@ def wsgi_to_bytes(s):
 def run_with_cgi(application):
     """
     1. 服务端收到HTTP请求后，生成environ字典，传递给可调用的application
-   （这个例子中，就是run_simpl:e)。
+   （这个例子中，就是simple_app)。
     2. start_response生成响应头。还要作为参数传递给application
     write(data)调用write方法，写入响应body
     """
@@ -70,13 +71,10 @@ def run_with_cgi(application):
         # Note: error checking on the headers should happen here
 
         return write
-    print('1')
+
     result = application(environ, start_response)
-    print(result)
-    print('2')
     try:
         for data in result:
-            print('3')
             if data:
                 write(data)     # don't send headers until body appears
         if not headers_sent:

@@ -3,7 +3,7 @@ HELLO_WORLD = b'Hello World! by jason\n'
 
 # 1.可调用对象是一个函数
 def simple_app(environ, start_response):
-    """扮演应用端角色，类似Flask。
+    """扮演应用端角色
     提供状态码和头部信息，返回响应字符串。
     服务端收到客户端HTTP请求后，将调用simple_app。
     """
