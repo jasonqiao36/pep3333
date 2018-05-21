@@ -14,7 +14,7 @@ def simple_app(environ, start_response):
 
 
 # 2.可调用对象是一个类
-class AppClass:
+class AppClassIter:
     """可调用对象就是AppClass这个类
     调用它可以返回可迭代对象
     使用方法类似于：
@@ -33,7 +33,7 @@ class AppClass:
 
 
 # 3.可调用对象是一个实例
-class AppClassNew:
+class AppClass:
     """这里可调用对象是一个实例
     app = AppClassNew()
     for result in app(environ, start_response):
@@ -50,4 +50,4 @@ class AppClassNew:
         yield HELLO_WORLD
 
 
-app = AppClassNew()
+app = AppClass()
