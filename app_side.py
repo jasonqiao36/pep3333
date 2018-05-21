@@ -10,7 +10,7 @@ def simple_app(environ, start_response):
     status = '200 OK'
     resp_headers = [('Content-Type', 'text/plain')]
     start_response(status, resp_headers)
-    return 'hello world by jason'
+    return [HELLO_WORLD]
 
 
 # 2.可调用对象是一个类
